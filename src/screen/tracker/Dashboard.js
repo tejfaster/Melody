@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import Create from "./Create";
 import Pending from "./Pending";
 import Completed from './Completed'
-import About from "./About";
 import { greencolor, yellowcolor } from "../../constant";
 
 
@@ -39,7 +38,6 @@ const Drawers = () => {
     return (
          <Drawer.Navigator screenOptions={{headerStyle:{backgroundColor:greencolor}}} useLegacyImplementation initialRouteName="Tracker">
             <Drawer.Screen name="Tracker" component={Tabs} />
-            <Drawer.Screen name="About" component={About} />
         </Drawer.Navigator>
     )
 }

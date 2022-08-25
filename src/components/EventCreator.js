@@ -4,25 +4,21 @@ import LinearGradient from 'react-native-linear-gradient';
 import { greencolor, yellowcolor } from '../constant';
 
 const EventCreator = (props) => {
-    const { onPress, style, title, colors } = props
+    const { onPress, style, title, colors, textstyle } = props
     return (
-        <LinearGradient
-            colors={colors}
-            style={[styles.container, style]}
-        >
-            <TouchableOpacity
+        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+            <LinearGradient
+                colors={colors}
+                style={[styles.container, style]}
                 onPress={onPress}
-            // style={[styles.container, style]}
             >
-                <Text style={styles.buttontext}>{title}</Text>
-            </TouchableOpacity>
-        </LinearGradient>
+                <Text style={[styles.buttontext, textstyle]}>{title}</Text>
+            </LinearGradient>
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        // flex:1,
-
         alignItems: "center",
         justifyContent: 'center',
         borderRadius: 20,
@@ -33,7 +29,7 @@ const styles = StyleSheet.create({
     buttontext: {
         color: "black",
         fontWeight: '700',
-        // fontSize: 20,
+        fontSize: 20,
     }
 })
 

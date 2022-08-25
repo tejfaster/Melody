@@ -29,7 +29,7 @@ const Pending = ({ navigation }) => {
     }, [isActives, isPause]);
 
     useEffect(() => {
-        if (time === 5000) {
+        if (time === 1800000) {
             PushNotification.localNotification({
                 channelId: "test-channel",
                 title: `Task is Running`,
@@ -54,19 +54,23 @@ const Pending = ({ navigation }) => {
     };
 
     const handlePauseResume = () => {
-        if (time != 0) {
+        if (time !== 0 ) {
             setIsPause(!isPause);
-            PushNotification.localNotification({
-                channelId: "test-channel",
-                title: `Paused`,
-                message: `${data.name} is Paused at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
-            })
-        }
+            if(isPause === false){
+                PushNotification.localNotification({
+                    channelId: "test-channel",
+                    title: `Paused`,
+                    message: `${data.name} is Paused at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
+                })
+            }
+        } 
     };
 
     const handleReset = () => {
         if (!isActives) {
             setIsActives(true)
+        } else if (isActives && isPause === true) {
+            setIsPause(!isPause)
         } else {
             setIsActives(false);
             PushNotification.localNotification({
@@ -84,20 +88,20 @@ const Pending = ({ navigation }) => {
             `Cancel ${data.name}`,
             "Press Ok to cancel the task",
             [
-            {
-                text: "Cancel", onPress: () => {
-                    setIsActives(true);
+                {
+                    text: "Cancel", onPress: () => {
+                        setIsActives(true);
+                    },
+                    style: "cancel"
                 },
-                style: "cancel"
-            },
-            {
-                text: "OK", onPress: () => {
-                    dispatch(TaskCreate("", false, true))
-                    setIsActives(false);
-                    setTime(0);
-                    navigation.navigate("Create")
+                {
+                    text: "OK", onPress: () => {
+                        dispatch(TaskCreate("", false, true))
+                        setIsActives(false);
+                        setTime(0);
+                        navigation.navigate("Create")
+                    }
                 }
-            }
             ]
 
         )
@@ -107,11 +111,11 @@ const Pending = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.headertext}>{data.name}</Text>
-            <EventCreator colors={['red', '#FF4200']} style={styles.headercross} title="✖" onPress={handleCancel} />
+            <EventCreator colors={['red', '#FF4200']} style={styles.headercross} textstyle={styles.cross} title="✖" onPress={handleCancel} />
             <View style={styles.subcontainer}>
-                <Text style={styles.text}>{(Math.floor(time / 60000) % 60)}</Text>
-                <Text style={styles.text}>{(Math.floor(time / 1000) % 60)}</Text>
-                <Text style={styles.text}>{(Math.floor(time / 10) % 100)}</Text>
+                <View style={styles.box}><Text style={styles.text}>{(Math.floor(time / 60000) % 60)}</Text></View>
+                <View style={styles.box}><Text style={styles.text}>{(Math.floor(time / 1000) % 60)}</Text></View>
+                <View style={styles.box}><Text style={styles.text}>{(Math.floor(time / 10) % 100)}</Text></View>
             </View>
             <View style={styles.bottomcontainer}>
                 <EventCreator colors={[greencolor, yellowcolor]} title="⏯" onPress={handlePauseResume} />
@@ -160,10 +164,19 @@ const styles = StyleSheet.create({
         width: 35,
         height: 35,
         position: "absolute",
-        alignSelf: 'flex-end',
-        margin: 5,
-        right:5,
-        top:5
+        // alignSelf: 'flex-end',
+        // margin: 5,
+        right: 5,
+        top: 5
+    },
+    box: {
+        borderWidth: 1,
+        width: 70,
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    cross: {
+        fontSize: 10
     }
 })
 

@@ -31,7 +31,7 @@ const Completed = () => {
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Task Name :- <Text style={{ color: "red" }}>{data.name}</Text></Text>
-                <EventCreator colors={['red', '#FF4200']} style={styles.headercross} title="✖" onPress={() => handleDelete(item)} />
+                <EventCreator colors={['red', '#FF4200']} textstyle={styles.cross} style={styles.headercross} title="✖" onPress={() => handleDelete(item)} />
                 <Text style={styles.text}>Task Duration :- <Text style={{ color: "blue" }}>{(Math.floor(data.time / 60000) % 60)}:{(Math.floor(data.time / 1000) % 60)}:{(Math.floor(data.time / 10) % 100)}</Text></Text>
                 <Text style={styles.text}>Task Time :- <Text style={{ color: "green" }}>{data.date}</Text></Text>
             </View>
@@ -77,7 +77,9 @@ const styles = StyleSheet.create({
         top: 5,
         alignSelf: 'flex-end',
         right: 5
-
+    },
+    cross:{
+        fontSize:10
     }
 })
 
