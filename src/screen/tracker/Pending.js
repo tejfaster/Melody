@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import EventCreator from '../../components/EventCreator';
 import { useSelector, useDispatch } from "react-redux";
 import { TaskFinish, TaskCreate } from "../../redux/action/tracker";
 import PushNotification from 'react-native-push-notification';
+import { greencolor, yellowcolor } from '../../constant';
 
 const Pending = ({ navigation }) => {
     const { data } = useSelector(item => item.TaskCreation)
@@ -28,7 +29,7 @@ const Pending = ({ navigation }) => {
     }, [isActives, isPause]);
 
     useEffect(() => {
-        if (time === 2000) {
+        if (time === 5000) {
             PushNotification.localNotification({
                 channelId: "test-channel",
                 title: `Task is Running`,
@@ -38,17 +39,18 @@ const Pending = ({ navigation }) => {
     }, [time])
 
     const handleCompleted = () => {
-        dispatch(TaskFinish(data.name, time, data.count))
-        setIsActives(false);
-        PushNotification.localNotification({
-            channelId: "test-channel",
-            title: `Task is Completed`,
-            message: `${data.name} at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
-        })
-        setTime(0);
-        dispatch(TaskCreate("", false, true))
-        navigation.navigate("Completed")
-
+        if (time !== 0) {
+            dispatch(TaskFinish(data.name, time, data.count))
+            setIsActives(false);
+            PushNotification.localNotification({
+                channelId: "test-channel",
+                title: `Task is Completed`,
+                message: `${data.name}is completed at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
+            })
+            setTime(0);
+            dispatch(TaskCreate("", false, true))
+            navigation.navigate("Completed")
+        }
     };
 
     const handlePauseResume = () => {
@@ -56,40 +58,67 @@ const Pending = ({ navigation }) => {
             setIsPause(!isPause);
             PushNotification.localNotification({
                 channelId: "test-channel",
-                title: `Task is Paused`,
-                message: `${data.name} at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
+                title: `Paused`,
+                message: `${data.name} is Paused at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
             })
-        }    };
+        }
+    };
 
     const handleReset = () => {
         if (!isActives) {
             setIsActives(true)
         } else {
             setIsActives(false);
-            setTime(0);
             PushNotification.localNotification({
                 channelId: "test-channel",
                 title: `Task is Reset`,
-                message: `${data.name}`
+                message: `${data.name} is reset at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s `
             })
+            setTime(0);
         }
-
     };
-    // console.log(isActives)
+
+    const handleCancel = () => {
+        setIsActives(false);
+        Alert.alert(
+            `Cancel ${data.name}`,
+            "Press Ok to cancel the task",
+            [
+            {
+                text: "Cancel", onPress: () => {
+                    setIsActives(true);
+                },
+                style: "cancel"
+            },
+            {
+                text: "OK", onPress: () => {
+                    dispatch(TaskCreate("", false, true))
+                    setIsActives(false);
+                    setTime(0);
+                    navigation.navigate("Create")
+                }
+            }
+            ]
+
+        )
+    }
+    console.log(isActives, isPause)
 
     return (
         <View style={styles.container}>
             <Text style={styles.headertext}>{data.name}</Text>
+            <EventCreator colors={['red', '#FF4200']} style={styles.headercross} title="✖" onPress={handleCancel} />
             <View style={styles.subcontainer}>
                 <Text style={styles.text}>{(Math.floor(time / 60000) % 60)}</Text>
                 <Text style={styles.text}>{(Math.floor(time / 1000) % 60)}</Text>
                 <Text style={styles.text}>{(Math.floor(time / 10) % 100)}</Text>
             </View>
             <View style={styles.bottomcontainer}>
-                <EventCreator title="⏯" onPress={handlePauseResume} />
-                <EventCreator title={isActives ? "↻" : "▶"} onPress={handleReset} />
-                <EventCreator title="✔" onPress={handleCompleted} />
+                <EventCreator colors={[greencolor, yellowcolor]} title="⏯" onPress={handlePauseResume} />
+                <EventCreator colors={[greencolor, yellowcolor]} title={isActives ? "↻" : "▶"} onPress={handleReset} />
+                <EventCreator colors={[greencolor, yellowcolor]} title="✔" onPress={handleCompleted} />
             </View>
+
         </View>
     )
 }
@@ -100,7 +129,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     text: {
         fontSize: 40,
@@ -108,15 +137,33 @@ const styles = StyleSheet.create({
         color: "black"
     },
     bottomcontainer: {
+        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        // height:"20%",
+        marginTop: '10%'
     },
-
     headertext: {
         fontWeight: "bold",
         fontSize: 35,
         color: "black",
         alignSelf: "center"
+    },
+    header: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: '5%'
+    },
+    headercross: {
+        width: 35,
+        height: 35,
+        position: "absolute",
+        alignSelf: 'flex-end',
+        margin: 5,
+        right:5,
+        top:5
     }
 })
 

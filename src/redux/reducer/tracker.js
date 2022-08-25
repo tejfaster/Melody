@@ -1,4 +1,4 @@
-import { create_Data, completed_Data } from '../action/tracker'
+import { create_Data, completed_Data,delete_Data } from '../action/tracker'
 
 const taskCreationState = {
     data: {
@@ -27,14 +27,7 @@ export const TaskCreation = (state = taskCreationState, action) => {
 }
 
 const completeState = {
-    list: [
-        {
-            name: "",
-            time: "",
-            count: "",
-            date: "",
-        }
-    ]
+    list: []
 }
 
 export const TaskComplete = (state = completeState, action) => {
@@ -52,6 +45,14 @@ export const TaskComplete = (state = completeState, action) => {
                     }
                 ]
             }
+        case delete_Data:
+            console.log(state.list[0])
+            return{
+                ...state,
+                list:state.list.filter(item => {
+                    return item.count !== action.payload        
+                })
+            }    
         default:
             return state
     }

@@ -1,18 +1,37 @@
 import React from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Alert } from 'react-native'
 import { useSelector, useDispatch } from "react-redux";
+import EventCreator from '../../components/EventCreator';
+import { TaskDelete } from "../../redux/action/tracker";
 
 const Completed = () => {
+    const dispatch = useDispatch()
     const { list } = useSelector(item => item.TaskComplete)
-    if (list && list[0].name === "") {
-        list.shift();
+    const handleDelete = (item) => {
+        Alert.alert(
+            `Delete ${item.item.name}`,
+            "Press Ok to delete",
+            [
+                {
+                    text: "Cancel", onPress: () => { },
+                    style: "cancel"
+                },
+                {
+                    text: "OK", onPress: () => {
+                        dispatch(TaskDelete(item.item.count))
+                    }
+                }
+            ]
+        )
     }
-    
+
+
     const renderItems = (item) => {
         const data = item.item
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>Task Name :- <Text style={{ color: "red" }}>{data.name}</Text></Text>
+                <EventCreator colors={['red', '#FF4200']} style={styles.headercross} title="✖" onPress={() => handleDelete(item)} />
                 <Text style={styles.text}>Task Duration :- <Text style={{ color: "blue" }}>{(Math.floor(data.time / 60000) % 60)}:{(Math.floor(data.time / 1000) % 60)}:{(Math.floor(data.time / 10) % 100)}</Text></Text>
                 <Text style={styles.text}>Task Time :- <Text style={{ color: "green" }}>{data.date}</Text></Text>
             </View>
@@ -43,13 +62,22 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     footer: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    footertext:{
-        color:"black",
+    footertext: {
+        color: "black",
         fontSize: 20,
+    },
+    headercross: {
+        width: 35,
+        height: 35,
+        position: 'absolute',
+        top: 5,
+        alignSelf: 'flex-end',
+        right: 5
+
     }
 })
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { requestUserPermission, notificationListener, createChannels } from "../../utils/pushNotification";
 
@@ -10,8 +10,10 @@ import Create from "./Create";
 import Pending from "./Pending";
 import Completed from './Completed'
 import About from "./About";
+import { greencolor, yellowcolor } from "../../constant";
 
-const Tab = createBottomTabNavigator();
+
+const Tab = createMaterialBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const Tabs = () => {
@@ -24,7 +26,7 @@ const Tabs = () => {
 
 
     return (
-        <Tab.Navigator screenOptions={{headerShown : false}}>
+        <Tab.Navigator screenOptions={{ headerShown: false }} barStyle={{backgroundColor:yellowcolor}}>
             {
                 data.isActive ? <Tab.Screen name="Pending" component={Pending} /> : <Tab.Screen name="Create" component={Create} />
             }
@@ -35,7 +37,7 @@ const Tabs = () => {
 
 const Drawers = () => {
     return (
-        <Drawer.Navigator useLegacyImplementation initialRouteName="Tracker">
+         <Drawer.Navigator screenOptions={{headerStyle:{backgroundColor:greencolor}}} useLegacyImplementation initialRouteName="Tracker">
             <Drawer.Screen name="Tracker" component={Tabs} />
             <Drawer.Screen name="About" component={About} />
         </Drawer.Navigator>

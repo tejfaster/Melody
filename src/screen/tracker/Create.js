@@ -7,6 +7,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import { useSelector, useDispatch } from "react-redux";
 import { TaskCreate } from "../../redux/action/tracker";
 import { payment } from "../../utils/payment";
+import { greencolor, yellowcolor } from "../../constant";
 
 const Create = ({ navigation }) => {
     const [data, setData] = React.useState("")
@@ -34,24 +35,26 @@ const Create = ({ navigation }) => {
         }
     }
 
-return (
-    <View style={styles.container}>
-        <View style={styles.subcontainer}>
-            <TextInput
-                style={styles.input}
-                onChangeText={item => setData(item)}
-                placeholder="Enter Your New Task here..."
-                placeholderTextColor={"black"}
-            />
-            <EventCreator
-                title="Start"
-                onPress={handleSubmit}
-            />
-            
-        </View>
+    return (
+        <View style={styles.container}>
+            <View style={styles.subcontainer}>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={item => setData(item)}
+                    placeholder="Enter Your New Task here..."
+                    placeholderTextColor={"black"}
+                />
+                <EventCreator
+                    title="Start"
+                    onPress={handleSubmit}
+                    style={{ marginTop: '10%' }}
+                    colors={[greencolor, yellowcolor]}
+                />
 
-    </View>
-)
+            </View>
+
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
