@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "80636798167",
+    "project_id": "melody-55",
+    "storage_bucket": "melody-55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80636798167:android:09d62e49dbef2f2708bc92",
+        "android_client_info": {
+          "package_name": "com.melody"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80636798167-d1e68ioguujnua3llbmsgjeq9ct5ghtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5IEcVUFwm-pyiyXRIUvdrupLAvhtoj4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80636798167-d1e68ioguujnua3llbmsgjeq9ct5ghtp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

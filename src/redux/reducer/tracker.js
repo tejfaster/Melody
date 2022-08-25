@@ -10,7 +10,6 @@ const taskCreationState = {
 }
 
 export const TaskCreation = (state = taskCreationState, action) => {
-    console.log(state.data.count)
     switch (action.type) {
         case create_Data:
             return {

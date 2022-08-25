@@ -7,7 +7,7 @@ const Completed = () => {
     if (list && list[0].name === "") {
         list.shift();
     }
-    console.log(list)
+    
     const renderItems = (item) => {
         const data = item.item
         return (
