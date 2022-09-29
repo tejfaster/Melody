@@ -4,9 +4,8 @@ import EventCreator from "../../components/EventCreator";
 import PushNotification from "react-native-push-notification";
 import RazorpayCheckout from 'react-native-razorpay';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TaskCreate } from "../../redux/action/tracker";
-import { payment } from "../../utils/payment";
 import { greencolor, yellowcolor } from "../../constant";
 
 const Create = ({ navigation }) => {
@@ -41,7 +40,7 @@ const Create = ({ navigation }) => {
                 <TextInput
                     style={styles.input}
                     onChangeText={item => setData(item)}
-                    placeholder="Enter Your New Task here..."
+                    placeholder="Enter Your New Task"
                     placeholderTextColor={"black"}
                 />
                 <EventCreator
@@ -67,7 +66,8 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 20,
         alignSelf: 'center',
-        color: "black"
+        color: "black",
+        alignSelf:'center'
     },
 })
 

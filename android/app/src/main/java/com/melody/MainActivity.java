@@ -1,8 +1,10 @@
-package com.melody;
+package com.melody_tej;
 
+import android.content.Intent;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+// import io.branch.rnbranch.*;
 
 public class MainActivity extends ReactActivity {
 
@@ -25,8 +27,26 @@ public class MainActivity extends ReactActivity {
     return new MainActivityDelegate(this, getMainComponentName());
   }
 
+  // Override onStart:
+  // @Override
+  // protected void onStart() {
+  //   super.onStart();
+  //   RNBranchModule.initSession(getIntent().getData(), this);
+  // }
+
+  // Override onNewIntent:
+  // @Override
+  // public void onNewIntent(Intent intent) {
+  //   super.onNewIntent(intent);
+  //   RNBranchModule.onNewIntent(intent);
+  // }
+
   public static class MainActivityDelegate extends ReactActivityDelegate {
-    public MainActivityDelegate(ReactActivity activity, String mainComponentName) {
+
+    public MainActivityDelegate(
+      ReactActivity activity,
+      String mainComponentName
+    ) {
       super(activity, mainComponentName);
     }
 

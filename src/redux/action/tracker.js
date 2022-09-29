@@ -17,7 +17,7 @@ export const TaskFinish = (...payload) => {
 }
 
 export const TaskDelete = (payload) => {
-    console.log("action",payload)
+    console.log("action", payload)
     return {
         type: delete_Data,
         payload: payload

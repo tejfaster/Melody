@@ -1,4 +1,4 @@
-package com.melody.newarchitecture.modules;
+package com.melody_tej.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

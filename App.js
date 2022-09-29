@@ -1,14 +1,18 @@
 import React from 'react'
 import Dashboard from './src/screen/tracker/Dashboard'
+
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import Store from './src/redux/store'
-import { Button, View } from 'react-native'
-import RazorpayCheckout from 'react-native-razorpay';
+import { Store, persistor } from './src/redux/store'
+
 const App = () => {
   return (
     <Provider store={Store}>
-      <Dashboard />
+      <PersistGate loading={null} persistor={persistor}>
+        <Dashboard />
+      </PersistGate>
     </Provider>
   )
 }
+
 export default App

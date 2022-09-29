@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import EventCreator from '../../components/EventCreator';
 import { useSelector, useDispatch } from "react-redux";
@@ -12,13 +12,13 @@ const Pending = ({ navigation }) => {
     const [isActives, setIsActives] = useState(data.isActive);
     const [isPause, setIsPause] = useState(data.isPaused);
     const [time, setTime] = useState(0);
-
+  
     useEffect(() => {
         let interval = null;
 
         if (isActives && isPause === false) {
             interval = setInterval(() => {
-                setTime((time) => time + 10);
+                setTime((time) => time + 20);
             }, 10);
         } else {
             clearInterval(interval);
@@ -45,7 +45,7 @@ const Pending = ({ navigation }) => {
             PushNotification.localNotification({
                 channelId: "test-channel",
                 title: `Task is Completed`,
-                message: `${data.name}is completed at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
+                message: `${data.name} is completed at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
             })
             setTime(0);
             dispatch(TaskCreate("", false, true))
@@ -54,23 +54,22 @@ const Pending = ({ navigation }) => {
     };
 
     const handlePauseResume = () => {
-        if (time !== 0 ) {
+        if (time !== 0) {
             setIsPause(!isPause);
-            if(isPause === false){
+            if (isPause === false) {
                 PushNotification.localNotification({
                     channelId: "test-channel",
                     title: `Paused`,
                     message: `${data.name} is Paused at ${(Math.floor(time / 1000) % 60)}:${(Math.floor(time / 10) % 100)} s`
                 })
             }
-        } 
+        }
     };
 
     const handleReset = () => {
         if (!isActives) {
             setIsActives(true)
-        } else if (isActives && isPause === true) {
-            setIsPause(!isPause)
+            setIsPause(false)
         } else {
             setIsActives(false);
             PushNotification.localNotification({
@@ -106,7 +105,7 @@ const Pending = ({ navigation }) => {
 
         )
     }
-    console.log(isActives, isPause)
+    // console.log(isActives, isPause)
 
     return (
         <View style={styles.container}>
@@ -128,7 +127,11 @@ const Pending = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
+    container: {
+        flex: 1,
+        paddingVertical: '10%',
+        paddingBottom: "20%"
+    },
     subcontainer: {
         flex: 1,
         flexDirection: 'row',
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
         color: "black"
     },
     bottomcontainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         // height:"20%",

@@ -4,12 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const getToken = async () => {
     let token = await AsyncStorage.getItem('pushToken')
-    console.log(token, "Local_Storage_Token")
+   // console.log(token, "Local_Storage_Token")
     if (!token) {
         try {
             const pushToken = await messaging().getToken()
             if (pushToken) {
-                console.log(pushToken, "the_new_genrated_token")
+              //  console.log(pushToken, "the_new_genrated_token")
                 await AsyncStorage.setItem('pushToken', pushToken)
             }
         } catch (error) {
@@ -25,29 +25,29 @@ export async function requestUserPermission() {
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-        console.log('Authorization status:', authStatus);
+       // console.log('Authorization status:', authStatus);
         getToken()
     }
 }
 
 export function notificationListener() {
     messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log('Notification caused app to open from background state:', remoteMessage.notification);
+       // console.log('Notification caused app to open from background state:', remoteMessage.notification);
         // navigation.navigate(remoteMessage.data.type);
     });
 
     messaging().onMessage(async remoteMessage => {
-        console.log("recived in foreground", remoteMessage)
+       // console.log("recived in foreground", remoteMessage)
     })
 
     messaging()
         .getInitialNotification()
         .then(remoteMessage => {
             if (remoteMessage) {
-                console.log(
-                    'Notification caused app to open from quit state:',
-                    remoteMessage.notification,
-                )
+                // console.log(
+                //     'Notification caused app to open from quit state:',
+                //     remoteMessage.notification,
+                // )
             }
         });
 }

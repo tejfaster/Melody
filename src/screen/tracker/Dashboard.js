@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { requestUserPermission, notificationListener, createChannels } from "../../utils/pushNotification";
+
 
 import { useSelector } from "react-redux";
 
@@ -25,9 +27,17 @@ const Tabs = () => {
 
 
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }} barStyle={{backgroundColor:yellowcolor}}>
+        <Tab.Navigator screenOptions={{ headerShown: false }} barStyle={{ backgroundColor: yellowcolor }}>
             {
-                data.isActive ? <Tab.Screen name="Pending" component={Pending} /> : <Tab.Screen name="Create" component={Create} />
+                data.isActive ?
+                    <Tab.Screen
+                        name="Pending"
+                        component={Pending}    
+                    /> :
+                    <Tab.Screen
+                    name="Create" 
+                    component={Create} 
+                    />
             }
             <Tab.Screen name="Completed" component={Completed} />
         </Tab.Navigator>
@@ -36,7 +46,7 @@ const Tabs = () => {
 
 const Drawers = () => {
     return (
-         <Drawer.Navigator screenOptions={{headerStyle:{backgroundColor:greencolor}}} useLegacyImplementation initialRouteName="Tracker">
+        <Drawer.Navigator screenOptions={{ headerStyle: { backgroundColor: greencolor } }} useLegacyImplementation initialRouteName="Tracker">
             <Drawer.Screen name="Tracker" component={Tabs} />
         </Drawer.Navigator>
     )
