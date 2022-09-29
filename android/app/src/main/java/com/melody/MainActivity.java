@@ -1,4 +1,4 @@
-package com.melody;
+package com.melody_tej;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

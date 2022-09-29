@@ -1,4 +1,4 @@
-package com.melody.newarchitecture;
+package com.melody_tej.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.melody.BuildConfig;
-import com.melody.newarchitecture.components.MainComponentsRegistry;
-import com.melody.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.melody_tej.BuildConfig;
+import com.melody_tej.newarchitecture.components.MainComponentsRegistry;
+import com.melody_tej.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
